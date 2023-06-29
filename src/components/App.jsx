@@ -1,16 +1,21 @@
-export const App = () => {
+import { useEffect } from 'react';
+import ContactForm from './ContactForm/ContactForm';
+import ContactsList from './Contacts/Contacts';
+import FilterContacts from './FilterContacts/FilterContacts';
+import { useContacts } from 'redux/useContacts';
+
+export default function App() {
+  const { contacts, getContacts } = useContacts();
+
+  useEffect(() => {
+    getContacts();
+  }, [getContacts]);
+
   return (
-    <div
-      style={{
-        height: '100vh',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        fontSize: 40,
-        color: '#010101'
-      }}
-    >
-      React homework template
-    </div>
+    <>
+      <ContactForm />
+      <FilterContacts />
+      {contacts.length > 0 && <ContactsList />}
+    </>
   );
-};
+}
